@@ -167,7 +167,7 @@
         .draggable { display: inline-block; background: var(--container-bg); border: 1px solid #ccc; padding: 8px 12px; margin: 5px; border-radius: 20px; cursor: grab; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         .draggable.dragging { opacity: 0.5; border: 2px dashed var(--primary); }
 
-        /* Flashcards */
+        /* Flashcards (Restaurado) */
         .flashcard-container { width: 90%; max-width: 500px; height: 300px; perspective: 1000px; margin: 0 auto 20px; }
         .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 10px; }
         .flashcard.is-flipped { transform: rotateY(180deg); }
@@ -177,11 +177,12 @@
         .flashcard-nav { text-align: center; }
         .btn-fc { background-color: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 1em; margin: 0 5px; }
         .btn-fc.flip { background-color: var(--primary); }
+        .card-back small { color: #555; }
 
         .tts-icon { font-size: 1.1em; cursor: pointer; margin-left: 8px; transition: transform 0.2s; }
         .tts-icon:hover { transform: scale(1.2); }
 
-        /* Interactive Story Specific Styles (copied from first provided HTML) */
+        /* Interactive Story Specific Styles (mantenido) */
         .interactive-story {
             font-size: 1.2em;
             line-height: 2;
@@ -242,7 +243,7 @@
                         <span class="bridge-icon">🌉</span>
                         <strong data-lang-key="bridge_link">The Bridge</strong><br>
                         <div class="rule-box">
-                            <strong>Rule:</strong> <span data-lang-key="rule_desc">Use <em>Haber</em> + <em>Participio</em> to connect the past to the present.</span>
+                            <strong>Rule:</strong> <span data-lang-key="rule_desc">Usa <em>Haber</em> + <em>Participio</em> to connect the past to the present.</span>
                         </div>
                     </div>
                     <div class="bridge-step">
@@ -339,16 +340,18 @@
 
             <div id="tab-flashcards" class="main-tab-content">
                 <h2 data-lang-key="flash_title">Flashcards</h2>
-                <div class="flashcard-container">
-                    <div class="flashcard" id="flashcard">
-                        <div class="card-face card-front" id="fc-front"></div>
-                        <div class="card-face card-back" id="fc-back"></div>
+                <div class="flashcard-app">
+                    <div class="flashcard-container">
+                        <div class="flashcard" id="flashcard">
+                            <div class="card-face card-front" id="fc-front"></div>
+                            <div class="card-face card-back" id="fc-back"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="flashcard-nav">
-                    <button class="btn-fc" onclick="prevCard()" data-lang-key="btn_prev">Prev</button>
-                    <button class="btn-fc flip" onclick="flipCard()" data-lang-key="btn_flip">Flip</button>
-                    <button class="btn-fc" onclick="nextCard()" data-lang-key="btn_next">Next</button>
+                    <div class="flashcard-nav">
+                        <button class="btn-fc" onclick="prevCard()" data-lang-key="btn_prev">Prev</button>
+                        <button class="btn-fc flip" onclick="flipCard()" data-lang-key="btn_flip">Flip</button>
+                        <button class="btn-fc" onclick="nextCard()" data-lang-key="btn_next">Next</button>
+                    </div>
                 </div>
             </div>
         </main>
@@ -424,7 +427,7 @@ const uiData = {
         btn_reset: "Reiniciar",
         drag_instr: "Arrastra el participio a la caja correcta.",
         btn_check: "Verificar",
-        flash_title: "Flashcards",
+        flash_title: "Fichas",
         btn_prev: "Ant",
         btn_flip: "Voltear",
         btn_next: "Sig"
@@ -465,6 +468,7 @@ const dragBank = [
     {w: "Vuelto", t: "irregular"}, {w: "Cubierto", t: "irregular"}, {w: "Devuelto", t: "irregular"}, {w: "Descubierto", t: "irregular"}
 ];
 
+// Flashcards (RESTAURADO)
 const flashcards = [
     {en:"I have spoken", es:"Yo he hablado", expl: "Haber (Yo) + Regular AR (-ado)"},
     {en:"You have eaten", es:"Tú has comido", expl: "Haber (Tú) + Regular ER (-ido)"},
@@ -658,15 +662,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Lazy load practice
         if (tabId === 'tab-practice' && !document.getElementById('quiz-container').hasChildNodes()) {
             generateQuiz(); 
-            generateStory(); // NEW: Initial generation
+            generateStory(); 
             generateDragDrop();
+        }
+        
+        // Lazy load flashcards
+        if (tabId === 'tab-flashcards') {
+            loadCard();
         }
     }
 
     // Init Acronyms (Original code preserved)
     const acBox = document.getElementById('acronyms');
     irregulars.forEach(i => {
-        // Simplified acronym init for this example
         if(acBox) {
             acBox.innerHTML += `
                 <div class="acronym-card" onclick="this.classList.toggle('flipped'); speak('${i.w}... ${i.p}')">
@@ -677,16 +685,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`;
         }
     });
-
-    // Init Flashcards
-    loadCard();
+    
+    // Initial calls for practice tab in case the user goes there first
+    // Note: These calls are redundant if using `changeMainTab` correctly, but useful for robustness.
+    // generateQuiz(); 
+    // generateStory(); 
+    // generateDragDrop();
 });
 
 // 1. QUIZ LOGIC (Original code preserved)
 function generateQuiz() {
     const container = document.getElementById('quiz-container');
     container.innerHTML = '';
-    const qs = [...quizBank].sort(()=>0.5-Math.random()).slice(0,5); // 5 Random questions
+    const qs = [...quizBank].sort(()=>0.5-Math.random()).slice(0,5); 
     
     qs.forEach((q, idx) => {
         const cleanText = q.q.replace(/[()]/g, " ");
@@ -711,16 +722,23 @@ window.checkQ = function(idx, ans) {
     }
 }
 
-// 2. INTERACTIVE STORY LOGIC (NEW)
+// 2. INTERACTIVE STORY LOGIC (CORREGIDO AUDIO)
 function generateStory() {
     const container = document.getElementById('story-container');
-    // Get a random story from the bank
     currentStoryData = storyBank[Math.floor(Math.random() * storyBank.length)];
     
-    // Set the HTML content
-    container.innerHTML = currentStoryData.html;
+    // Añadir el icono de audio a CADA OPCIÓN del select
+    let htmlWithAudio = currentStoryData.html.replace(/<select.*?<\/select>/g, (match) => {
+        // Extraer solo la opción correcta para el audio
+        const correctOptionMatch = match.match(/<option value="c">(.*?)<\/option>/);
+        const audioText = correctOptionMatch ? correctOptionMatch[1].replace(/<[^>]*>?/gm, '') : 'conjugación';
+        
+        // El audio se reproduce al hacer clic en el botón de check o en el texto
+        return `${match} <span class="tts-icon" onclick="event.stopPropagation(); speak('${audioText}')">🔊</span>`;
+    });
     
-    // Remove previous explanations and reset border colors
+    container.innerHTML = htmlWithAudio;
+    
     container.querySelectorAll('.story-explanation').forEach(e => e.remove());
     container.querySelectorAll('select').forEach(sel => {
          sel.style.borderColor = "#ccc";
@@ -729,7 +747,6 @@ function generateStory() {
 
 function checkStory() {
     const container = document.getElementById('story-container');
-    // Remove previous explanations
     container.querySelectorAll('.story-explanation').forEach(e => e.remove());
     
     const selects = container.querySelectorAll('select');
@@ -747,13 +764,11 @@ function checkStory() {
             exp.textContent = "✅ Correcto";
             exp.style.color = "var(--green)";
         } else {
-            // Find the correct option text to display
             const correctOption = Array.from(sel.options).find(opt => opt.value === 'c');
             exp.textContent = `❌ Incorrecto (Debe ser: ${correctOption ? correctOption.text : 'N/A'})`;
             exp.style.color = "var(--red)";
         }
         
-        // Insert the explanation right after the select element
         sel.parentNode.insertBefore(exp, sel.nextSibling);
     });
 }
@@ -767,18 +782,16 @@ function generateDragDrop() {
     document.getElementById('drag-feedback').textContent = '';
     document.querySelectorAll('.dropzone .draggable').forEach(e=>e.remove());
     
-    currentDragItems = [...dragBank].sort(()=>0.5-Math.random()).slice(0,8); // 8 Random items
+    currentDragItems = [...dragBank].sort(()=>0.5-Math.random()).slice(0,8); 
     
     currentDragItems.forEach(i => {
         const el = document.createElement('div');
         el.className = 'draggable'; el.draggable = true;
         el.innerHTML = `${i.w} <span class="tts-icon" onclick="event.stopPropagation(); speak('${i.w}')">🔊</span>`;
-        el.dataset.type = i.t; // regular or irregular
+        el.dataset.type = i.t; 
         
-        // Mouse
         el.addEventListener('dragstart', e => { e.dataTransfer.setData('text', i.t); e.target.classList.add('dragging'); });
         el.addEventListener('dragend', e => e.target.classList.remove('dragging'));
-        // Touch (omitted touch logic for brevity, but it was in the original)
         
         dragPool.appendChild(el);
     });
@@ -820,18 +833,29 @@ window.checkDrag = function() {
 }
 
 
-// 4. FLASHCARDS LOGIC (Original code preserved)
+// 4. FLASHCARDS LOGIC (RESTAURADO)
 let cIdx = 0;
 function loadCard() {
     const d = flashcards[cIdx];
-    // This is simplified as the original flashcard elements are not fully present in the HTML snippet
-    // document.getElementById('fc-front').innerHTML = d.en;
-    // document.getElementById('fc-back').innerHTML = `${d.es}${tts}<br><br><small style="color:var(--dark-blue)">${d.expl}</small>`;
-    // document.getElementById('flashcard').classList.remove('is-flipped');
+    // Audio text is the Spanish phrase
+    const tts = `&nbsp;<span class="tts-icon" data-tts="${d.es.replace(/<[^>]*>?/gm, '')}">🔊</span>`;
+    document.getElementById('fc-front').innerHTML = d.en;
+    document.getElementById('fc-back').innerHTML = `${d.es}${tts}<br><br><small style="color:var(--dark-blue)">${d.expl}</small>`;
+    document.getElementById('flashcard').classList.remove('is-flipped');
 }
-window.flipCard = () => { /* flip logic */ };
+window.flipCard = () => document.getElementById('flashcard').classList.toggle('is-flipped');
 window.nextCard = () => { cIdx=(cIdx+1)%flashcards.length; loadCard(); };
 window.prevCard = () => { cIdx=(cIdx-1+flashcards.length)%flashcards.length; loadCard(); };
+
+// Audio Click Handler for Flashcards
+document.body.addEventListener('click', function(e) {
+    if(e.target.classList.contains('tts-icon')) {
+        e.stopPropagation(); // Stop flip
+        speak(e.target.dataset.tts);
+    } else if(e.target.closest('#flashcard')) {
+        flipCard();
+    }
+});
 
 // UI Functions (Original code preserved)
 window.toggleLang = function() {
