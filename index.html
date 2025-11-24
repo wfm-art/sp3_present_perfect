@@ -141,15 +141,45 @@
 
         /* The Helper Grid */
         .haber-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; margin-bottom: 20px; }
-        .haber-box { background: var(--primary); color: white; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; transition: transform 0.2s; font-weight: bold; font-size: 1.2em; }
+        .haber-box {
+            background: var(--primary);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
         .haber-box:hover { transform: translateY(-3px); background: var(--dark-blue); }
 
         /* Irregulars */
         .acronym-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 20px; }
-        .acronym-card { width: 100px; height: 100px; perspective: 1000px; cursor: pointer; }
-        .acronym-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; }
+        .acronym-card {
+            width: 100px; height: 100px;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+        .acronym-inner {
+            width: 100%; height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
         .acronym-card.flipped .acronym-inner { transform: rotateY(180deg); }
-        .acronym-front, .acronym-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        
+        .acronym-front, .acronym-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
         .acronym-front { background: var(--yellow); color: #333; font-size: 2em; font-weight: bold; border: 2px solid #e0a800; }
         .acronym-back { background: var(--dark-blue); color: white; transform: rotateY(180deg); font-size: 0.85em; text-align: center; padding: 2px; }
 
@@ -162,52 +192,35 @@
         .feedback { font-weight: bold; margin-left: 10px; }
         .correct { color: var(--green); } .incorrect { color: var(--red); }
 
-        /* Drag Drop */
+        /* Drag & Drop */
+        .dropzone-container { display: flex; gap: 20px; margin-top: 20px; }
         .dropzone { flex: 1; min-height: 200px; background: var(--light-gray-bg); border: 3px dashed var(--border-color); border-radius: 8px; padding: 10px; }
-        .draggable { display: inline-block; background: var(--container-bg); border: 1px solid #ccc; padding: 8px 12px; margin: 5px; border-radius: 20px; cursor: grab; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .dropzone.drag-over { background-color: #e9ecef; border-color: var(--primary); }
+        .dropzone h4 { text-align: center; margin-top: 0; color: var(--dark-blue); }
+        
+        .draggable { 
+            display: inline-block; background: var(--container-bg); border: 1px solid #ccc; 
+            padding: 8px 12px; margin: 5px; border-radius: 20px; 
+            cursor: grab; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
         .draggable.dragging { opacity: 0.5; border: 2px dashed var(--primary); }
+        #drag-pool { min-height: 80px; background: var(--tab-bg); border-radius: 8px; padding: 15px; margin-bottom: 10px; }
 
-        /* Flashcards (Restaurado) */
+        /* Flashcards */
         .flashcard-container { width: 90%; max-width: 500px; height: 300px; perspective: 1000px; margin: 0 auto 20px; }
         .flashcard { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.6s; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 10px; }
         .flashcard.is-flipped { transform: rotateY(180deg); }
         .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; font-size: 1.4em; border-radius: 10px; box-sizing: border-box; white-space: normal; word-break: break-word; }
         .card-front { background: var(--container-bg); border: 2px solid var(--primary); color: var(--text-color); }
         .card-back { background: var(--light-gray-bg); border: 2px solid var(--green); color: var(--dark-blue); transform: rotateY(180deg); }
+        .card-back p { margin: 10px 0 0; font-size: 0.8em; color: var(--text-color); opacity: 0.8; }
+        body.dark-mode .card-back { color: var(--text-color); }
         .flashcard-nav { text-align: center; }
         .btn-fc { background-color: #6c757d; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 1em; margin: 0 5px; }
         .btn-fc.flip { background-color: var(--primary); }
-        .card-back small { color: #555; }
-
+        
         .tts-icon { font-size: 1.1em; cursor: pointer; margin-left: 8px; transition: transform 0.2s; }
         .tts-icon:hover { transform: scale(1.2); }
-
-        /* Interactive Story Specific Styles (mantenido) */
-        .interactive-story {
-            font-size: 1.2em;
-            line-height: 2;
-            padding: 20px;
-            background: #fdfaf6; 
-            border: 1px solid var(--yellow); 
-            border-radius: 8px; 
-            color: #333; 
-        }
-        .interactive-story select { 
-            font-size: 1em; 
-            border: 2px solid #ccc; 
-            border-radius: 4px; 
-            background: #fff; 
-            padding: 2px 5px; 
-        }
-        .story-explanation { 
-            display: inline-block; 
-            font-size: 0.9em; 
-            font-style: italic; 
-            color: var(--dark-blue); 
-            margin-left: 10px; 
-        }
-        body.dark-mode .interactive-story { color: #333; }
-        body.dark-mode .story-explanation { color: #80bfff; }
     </style>
 </head>
 <body class="">
@@ -219,7 +232,7 @@
                 <button class="control-button" onclick="toggleTheme()">☀️/🌙</button>
             </div>
             <h1 data-lang-key="header_title">Present Perfect</h1>
-            <p data-lang-key="header_subtitle">The Bridge: Connecting Past & Present</p>
+            <p data-lang-key="header_subtitle">The Bridge: Connecting Past & Present 🌉</p>
         </header>
         
         <nav class="main-tab-nav">
@@ -243,7 +256,7 @@
                         <span class="bridge-icon">🌉</span>
                         <strong data-lang-key="bridge_link">The Bridge</strong><br>
                         <div class="rule-box">
-                            <strong>Rule:</strong> <span data-lang-key="rule_desc">Usa <em>Haber</em> + <em>Participio</em> to connect the past to the present.</span>
+                            <strong>Rule:</strong> <span data-lang-key="rule_desc">Use <em>Haber</em> + <em>Participio</em> to connect the past to the present.</span>
                         </div>
                     </div>
                     <div class="bridge-step">
@@ -307,29 +320,18 @@
 
                 <div class="quiz-section">
                     <div class="section-header">
-                        <h3 data-lang-key="story_title">Part 2: Interactive Story</h3> 
-                        <button id="generate-story" class="refresh-btn" onclick="generateStory()" data-lang-key="btn_new">New Story</button>
-                    </div>
-                    <p data-lang-key="story_instr">Select the correct verb form (Haber + Participle).</p> 
-                    <div id="story-container" class="interactive-story"></div>
-                    <button id="check-story-btn" class="button-primary" style="margin-top: 20px;" onclick="checkStory()">Check Story</button>
-                </div>
-                <hr style="margin: 30px 0; border-top: 1px dashed #ccc;">
-
-                <div class="quiz-section">
-                    <div class="section-header">
-                        <h3 data-lang-key="drag_title">Part 3: Regular vs. Irregular</h3>
+                        <h3 data-lang-key="drag_title">Part 2: Regular vs. Irregular</h3>
                         <button class="refresh-btn" onclick="generateDragDrop()" data-lang-key="btn_reset">Reset</button>
                     </div>
                     <p data-lang-key="drag_instr">Drag the participle to the correct box.</p>
                     
-                    <div id="drag-pool" style="background:#eee; padding:10px; border-radius:8px; min-height:50px; margin-bottom:10px;"></div>
+                    <div id="drag-pool"></div>
                     
-                    <div class="sorter-area" style="display:flex; gap:20px;">
-                        <div class="dropzone" id="zone-regular" style="flex:1;">
+                    <div class="sorter-container">
+                        <div class="dropzone" id="zone-regular">
                             <h4>✅ Regular (-ado/-ido)</h4>
                         </div>
-                        <div class="dropzone" id="zone-irregular" style="flex:1;">
+                        <div class="dropzone" id="zone-irregular">
                             <h4>⚠️ Irregular (REVV MAC)</h4>
                         </div>
                     </div>
@@ -340,18 +342,16 @@
 
             <div id="tab-flashcards" class="main-tab-content">
                 <h2 data-lang-key="flash_title">Flashcards</h2>
-                <div class="flashcard-app">
-                    <div class="flashcard-container">
-                        <div class="flashcard" id="flashcard">
-                            <div class="card-face card-front" id="fc-front"></div>
-                            <div class="card-face card-back" id="fc-back"></div>
-                        </div>
+                <div class="flashcard-container">
+                    <div class="flashcard" id="flashcard">
+                        <div class="card-face card-front" id="fc-front"></div>
+                        <div class="card-face card-back" id="fc-back"></div>
                     </div>
-                    <div class="flashcard-nav">
-                        <button class="btn-fc" onclick="prevCard()" data-lang-key="btn_prev">Prev</button>
-                        <button class="btn-fc flip" onclick="flipCard()" data-lang-key="btn_flip">Flip</button>
-                        <button class="btn-fc" onclick="nextCard()" data-lang-key="btn_next">Next</button>
-                    </div>
+                </div>
+                <div class="flashcard-nav">
+                    <button class="btn-fc" onclick="prevCard()" data-lang-key="btn_prev">Prev</button>
+                    <button class="btn-fc flip" onclick="flipCard()" data-lang-key="btn_flip">Flip</button>
+                    <button class="btn-fc" onclick="nextCard()" data-lang-key="btn_next">Next</button>
                 </div>
             </div>
         </main>
@@ -385,9 +385,7 @@ const uiData = {
         quiz_title: "Part 1: Conjugation Quiz",
         btn_new: "New Questions",
         quiz_instr: "Write the correct form of \"Haber\" + Participle.",
-        story_title: "Part 2: Interactive Story", // NUEVO
-        story_instr: "Select the correct verb form (Haber + Participle).", // NUEVO
-        drag_title: "Part 3: Regular vs. Irregular", // ACTUALIZADO
+        drag_title: "Part 2: Regular vs. Irregular",
         btn_reset: "Reset",
         drag_instr: "Drag the participle to the correct box.",
         btn_check: "Check Sorting",
@@ -421,13 +419,11 @@ const uiData = {
         quiz_title: "Parte 1: Quiz de Conjugación",
         btn_new: "Nuevas Preguntas",
         quiz_instr: "Escribe la forma correcta de \"Haber\" + Participio.",
-        story_title: "Parte 2: Historia Interactiva", // NUEVO
-        story_instr: "Selecciona la forma verbal correcta (Haber + Participio).", // NUEVO
-        drag_title: "Parte 3: Regular vs. Irregular", // ACTUALIZADO
+        drag_title: "Parte 2: Regular vs. Irregular",
         btn_reset: "Reiniciar",
         drag_instr: "Arrastra el participio a la caja correcta.",
         btn_check: "Verificar",
-        flash_title: "Fichas",
+        flash_title: "Flashcards",
         btn_prev: "Ant",
         btn_flip: "Voltear",
         btn_next: "Sig"
@@ -443,7 +439,7 @@ const irregulars = [
     {l:"D", w:"Decir", p:"Dicho"}, {l:"D", w:"Devolver", p:"Devuelto"}
 ];
 
-// 30 Questions for Quiz (Original bank structure preserved)
+// 30 Questions for Quiz
 const quizBank = [
     {q: "Yo (hablar)", a: "he hablado"}, {q: "Tú (comer)", a: "has comido"}, {q: "Ella (vivir)", a: "ha vivido"},
     {q: "Nosotros (trabajar)", a: "hemos trabajado"}, {q: "Ellos (beber)", a: "han bebido"}, {q: "Vosotros (estudiar)", a: "habéis estudiado"},
@@ -458,7 +454,7 @@ const quizBank = [
     {q: "Él (caminar)", a: "ha caminado"}
 ];
 
-// 24 Drag Items (Original bank structure preserved)
+// 24 Drag Items
 const dragBank = [
     {w: "Hablado", t: "regular"}, {w: "Comido", t: "regular"}, {w: "Vivido", t: "regular"}, {w: "Bailado", t: "regular"},
     {w: "Estudiado", t: "regular"}, {w: "Corrido", t: "regular"}, {w: "Dormido", t: "regular"}, {w: "Jugado", t: "regular"},
@@ -468,7 +464,6 @@ const dragBank = [
     {w: "Vuelto", t: "irregular"}, {w: "Cubierto", t: "irregular"}, {w: "Devuelto", t: "irregular"}, {w: "Descubierto", t: "irregular"}
 ];
 
-// Flashcards (RESTAURADO)
 const flashcards = [
     {en:"I have spoken", es:"Yo he hablado", expl: "Haber (Yo) + Regular AR (-ado)"},
     {en:"You have eaten", es:"Tú has comido", expl: "Haber (Tú) + Regular ER (-ido)"},
@@ -484,172 +479,7 @@ const flashcards = [
     {en:"You have died (Irreg)", es:"Has muerto", expl: "Irregular: Morir -> Muerto"}
 ];
 
-// Banco de Historias Interactivas (20 ítems) - NUEVO
-const storyBank = [
-    {
-        id: "s1",
-        html: `<span>Yo nunca</span> 
-            <select id="story1-1" data-type="irregular"><option value="w">he veído</option><option value="c">he visto</option></select>
-            <span>una aurora boreal. Pero mi amigo Juan</span> 
-            <select id="story1-2" data-type="regular"><option value="c">ha viajado</option><option value="w">ha viajó</option></select>
-            <span>a Alaska y me dice que son increíbles.`
-    },
-    {
-        id: "s2",
-        html: `<span>Nosotros</span> 
-            <select id="story2-1" data-type="regular"><option value="w">hemos estudimos</option><option value="c">hemos estudiado</option></select>
-            <span>mucho para el examen. La profesora</span> 
-            <select id="story2-2" data-type="irregular"><option value="c">ha dicho</option><option value="w">ha dicido</option></select>
-            <span>que es el más difícil del semestre.`
-    },
-    {
-        id: "s3",
-        html: `<span>Ellos ya</span> 
-            <select id="story3-1" data-type="irregular"><option value="w">han volvido</option><option value="c">han vuelto</option></select>
-            <span>de vacaciones. ¿Qué</span> 
-            <select id="story3-2" data-type="irregular"><option value="w">has hacido</option><option value="c">has hecho</option></select>
-            <span>tú este fin de semana?`
-    },
-    {
-        id: "s4",
-        html: `<span>Mi hermano</span> 
-            <select id="story4-1" data-type="irregular"><option value="c">ha roto</option><option value="w">ha rompido</option></select>
-            <span>su teléfono otra vez. Por suerte, yo le</span> 
-            <select id="story4-2" data-type="regular"><option value="w">he presto</option><option value="c">he prestado</option></select>
-            <span>el mío.`
-    },
-    {
-        id: "s5",
-        html: `<span>¿Por qué no</span> 
-            <select id="story5-1" data-type="regular"><option value="c">has comido</option><option value="w">has come</option></select>
-            <span>nada? Yo</span> 
-            <select id="story5-2" data-type="irregular"><option value="w">he ponido</option><option value="c">he puesto</option></select>
-            <span>la mesa con mi mejor vajilla para ti.`
-    },
-    {
-        id: "s6",
-        html: `<span>Usted ya</span> 
-            <select id="story6-1" data-type="regular"><option value="w">ha hablar</option><option value="c">ha hablado</option></select>
-            <span>con el jefe. Ahora, nosotros</span> 
-            <select id="story6-2" data-type="regular"><option value="c">hemos tomado</option><option value="w">hemos tomimos</option></select>
-            <span>una decisión.`
-    },
-    {
-        id: "s7",
-        html: `<span>¿Quién</span> 
-            <select id="story7-1" data-type="irregular"><option value="w">ha escribido</option><option value="c">ha escrito</option></select>
-            <span>este poema? El autor</span> 
-            <select id="story7-2" data-type="irregular"><option value="c">ha abierto</option><option value="w">ha abrido</option></select>
-            <span>su corazón.`
-    },
-    {
-        id: "s8",
-        html: `<span>Mis abuelos</span> 
-            <select id="story8-1" data-type="irregular"><option value="w">han morido</option><option value="c">han muerto</option></select>
-            <span>hace poco. Yo nunca</span> 
-            <select id="story8-2" data-type="regular"><option value="c">he vivido</option><option value="w">he viví</option></select>
-            <span>un dolor tan grande.`
-    },
-    {
-        id: "s9",
-        html: `<span>Nunca</span> 
-            <select id="story9-1" data-type="regular"><option value="c">he dormido</option><option value="w">he duermo</option></select>
-            <span>tan bien. Los vecinos no</span> 
-            <select id="story9-2" data-type="irregular"><option value="c">han dicho</option><option value="w">han dicido</option></select>
-            <span>nada sobre la fiesta.`
-    },
-    {
-        id: "s10",
-        html: `<span>La policía</span> 
-            <select id="story10-1" data-type="irregular"><option value="w">ha cubrido</option><option value="c">ha cubierto</option></select>
-            <span>la zona. Yo</span> 
-            <select id="story10-2" data-type="irregular"><option value="c">he visto</option><option value="w">he veado</option></select>
-            <span>el accidente.`
-    },
-    {
-        id: "s11",
-        html: `<span>¿Tú</span> 
-            <select id="story11-1" data-type="regular"><option value="w">has leí</option><option value="c">has leído</option></select>
-            <span>el libro? El autor</span> 
-            <select id="story11-2" data-type="regular"><option value="c">ha sido</option><option value="w">ha sidido</option></select>
-            <span>galardonado esta semana.`
-    },
-    {
-        id: "s12",
-        html: `<span>Nosotros</span> 
-            <select id="story12-1" data-type="irregular"><option value="c">hemos dicho</option><option value="w">hemos decido</option></select>
-            <span>la verdad. Los demás</span> 
-            <select id="story12-2" data-type="regular"><option value="w">han creyido</option><option value="c">han creído</option></select>
-            <span>nuestra historia.`
-    },
-    {
-        id: "s13",
-        html: `<span>Yo</span> 
-            <select id="story13-1" data-type="regular"><option value="c">he pagado</option><option value="w">he pague</option></select>
-            <span>la cuenta. El camarero ya la</span> 
-            <select id="story13-2" data-type="irregular"><option value="c">ha devuelto</option><option value="w">ha devolvido</option></select>
-            <span>al cliente.`
-    },
-    {
-        id: "s14",
-        html: `<span>Tú</span> 
-            <select id="story14-1" data-type="regular"><option value="w">has comprido</option><option value="c">has comprado</option></select>
-            <span>un coche. Yo</span> 
-            <select id="story14-2" data-type="regular"><option value="c">he ahorrado</option><option value="w">he ahorre</option></select>
-            <span>mucho este año.`
-    },
-    {
-        id: "s15",
-        html: `<span>Mi madre</span> 
-            <select id="story15-1" data-type="regular"><option value="c">ha cocinado</option><option value="w">ha cocina</option></select>
-            <span>mucho. Nosotros</span> 
-            <select id="story15-2" data-type="regular"><option value="w">hemos comamos</option><option value="c">hemos comido</option></select>
-            <span>toda la comida.`
-    },
-    {
-        id: "s16",
-        html: `<span>Ellos</span> 
-            <select id="story16-1" data-type="regular"><option value="w">han termino</option><option value="c">han terminado</option></select>
-            <span>el proyecto. Yo</span> 
-            <select id="story16-2" data-type="irregular"><option value="c">he escrito</option><option value="w">he escribo</option></select>
-            <span>el informe final.`
-    },
-    {
-        id: "s17",
-        html: `<span>¿Quién</span> 
-            <select id="story17-1" data-type="regular"><option value="c">ha bebido</option><option value="w">ha beba</option></select>
-            <span>el zumo? Yo no</span> 
-            <select id="story17-2" data-type="irregular"><option value="w">he abrido</option><option value="c">he abierto</option></select>
-            <span>la nevera.`
-    },
-    {
-        id: "s18",
-        html: `<span>Nosotros</span> 
-            <select id="story18-1" data-type="regular"><option value="w">hemos salimos</option><option value="c">hemos salido</option></select>
-            <span>pronto. ¿Por qué tú</span> 
-            <select id="story18-2" data-type="irregular"><option value="c">has vuelto</option><option value="w">has devolvido</option></select>
-                    <span>tan tarde?`
-    },
-    {
-        id: "s19",
-        html: `<span>Mi perro</span> 
-            <select id="story19-1" data-type="irregular"><option value="c">ha roto</option><option value="w">ha rompido</option></select>
-            <span>el jarrón. ¡Yo no</span> 
-            <select id="story19-2" data-type="irregular"><option value="w">he hacido</option><option value="c">he hecho</option></select>
-            <span>nada!`
-    },
-    {
-        id: "s20",
-        html: `<span>El pintor</span> 
-            <select id="story20-1" data-type="irregular"><option value="c">ha puesto</option><option value="w">ha ponido</option></select>
-            <span>su firma. Yo</span> 
-            <select id="story20-2" data-type="irregular"><option value="c">he visto</option><option value="w">he veído</option></select>
-            <span>su nueva obra.`
-    }
-];
-
 // --- LOGIC ---
-let currentStoryData = {}; 
 
 document.addEventListener('DOMContentLoaded', () => {
     // Init Tabs
@@ -661,50 +491,38 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Lazy load practice
         if (tabId === 'tab-practice' && !document.getElementById('quiz-container').hasChildNodes()) {
-            generateQuiz(); 
-            generateStory(); 
-            generateDragDrop();
-        }
-        
-        // Lazy load flashcards
-        if (tabId === 'tab-flashcards') {
-            loadCard();
+            generateQuiz(); generateDragDrop();
         }
     }
 
-    // Init Acronyms (Original code preserved)
+    // Init Acronyms
     const acBox = document.getElementById('acronyms');
     irregulars.forEach(i => {
-        if(acBox) {
-            acBox.innerHTML += `
-                <div class="acronym-card" onclick="this.classList.toggle('flipped'); speak('${i.w}... ${i.p}')">
-                    <div class="acronym-inner">
-                        <div class="acronym-front">${i.l}</div>
-                        <div class="acronym-back">${i.w}<br>⬇️<br><strong>${i.p}</strong></div>
-                    </div>
-                </div>`;
-        }
+        acBox.innerHTML += `
+            <div class="acronym-card" onclick="this.classList.toggle('flipped'); speak('${i.w}... ${i.p}')">
+                <div class="acronym-inner">
+                    <div class="acronym-front">${i.l}</div>
+                    <div class="acronym-back">${i.w}<br>⬇️<br><strong>${i.p}</strong></div>
+                </div>
+            </div>`;
     });
-    
-    // Initial calls for practice tab in case the user goes there first
-    // Note: These calls are redundant if using `changeMainTab` correctly, but useful for robustness.
-    // generateQuiz(); 
-    // generateStory(); 
-    // generateDragDrop();
+
+    // Init Flashcards
+    loadCard();
 });
 
-// 1. QUIZ LOGIC (Original code preserved)
+// 1. QUIZ LOGIC
 function generateQuiz() {
     const container = document.getElementById('quiz-container');
     container.innerHTML = '';
-    const qs = [...quizBank].sort(()=>0.5-Math.random()).slice(0,5); 
+    const qs = [...quizBank].sort(()=>0.5-Math.random()).slice(0,5); // 5 Random questions
     
     qs.forEach((q, idx) => {
-        const cleanText = q.q.replace(/[()]/g, " ");
-        
+        // CORRECCION: Limpiar paréntesis para el audio
+        const audioText = q.q.replace(/[()]/g, "");
         container.innerHTML += `
             <div class="quiz-question">
-                <p>${idx+1}. ${q.q} <span class="tts-icon" onclick="speak('${cleanText}')">🔊</span></p>
+                <p>${idx+1}. ${q.q} <span class="tts-icon" onclick="speak('${audioText}')">🔊</span></p>
                 <input type="text" id="inp-${idx}" placeholder="Ex: he comido">
                 <button onclick="checkQ(${idx}, '${q.a}')">Check</button>
                 <span id="fb-${idx}" class="feedback"></span>
@@ -722,58 +540,7 @@ window.checkQ = function(idx, ans) {
     }
 }
 
-// 2. INTERACTIVE STORY LOGIC (CORREGIDO AUDIO)
-function generateStory() {
-    const container = document.getElementById('story-container');
-    currentStoryData = storyBank[Math.floor(Math.random() * storyBank.length)];
-    
-    // Añadir el icono de audio a CADA OPCIÓN del select
-    let htmlWithAudio = currentStoryData.html.replace(/<select.*?<\/select>/g, (match) => {
-        // Extraer solo la opción correcta para el audio
-        const correctOptionMatch = match.match(/<option value="c">(.*?)<\/option>/);
-        const audioText = correctOptionMatch ? correctOptionMatch[1].replace(/<[^>]*>?/gm, '') : 'conjugación';
-        
-        // El audio se reproduce al hacer clic en el botón de check o en el texto
-        return `${match} <span class="tts-icon" onclick="event.stopPropagation(); speak('${audioText}')">🔊</span>`;
-    });
-    
-    container.innerHTML = htmlWithAudio;
-    
-    container.querySelectorAll('.story-explanation').forEach(e => e.remove());
-    container.querySelectorAll('select').forEach(sel => {
-         sel.style.borderColor = "#ccc";
-    });
-}
-
-function checkStory() {
-    const container = document.getElementById('story-container');
-    container.querySelectorAll('.story-explanation').forEach(e => e.remove());
-    
-    const selects = container.querySelectorAll('select');
-    selects.forEach(sel => {
-        const val = sel.value;
-        const type = sel.dataset.type;
-        const isCorrect = val === 'c';
-        
-        sel.style.borderColor = isCorrect ? "var(--green)" : "var(--red)";
-        
-        const exp = document.createElement('span');
-        exp.className = 'story-explanation';
-        
-        if (isCorrect) {
-            exp.textContent = "✅ Correcto";
-            exp.style.color = "var(--green)";
-        } else {
-            const correctOption = Array.from(sel.options).find(opt => opt.value === 'c');
-            exp.textContent = `❌ Incorrecto (Debe ser: ${correctOption ? correctOption.text : 'N/A'})`;
-            exp.style.color = "var(--red)";
-        }
-        
-        sel.parentNode.insertBefore(exp, sel.nextSibling);
-    });
-}
-
-// 3. DRAG & DROP LOGIC (Original code preserved)
+// 2. DRAG & DROP LOGIC
 const dragPool = document.getElementById('drag-pool');
 let currentDragItems = [];
 
@@ -782,16 +549,17 @@ function generateDragDrop() {
     document.getElementById('drag-feedback').textContent = '';
     document.querySelectorAll('.dropzone .draggable').forEach(e=>e.remove());
     
-    currentDragItems = [...dragBank].sort(()=>0.5-Math.random()).slice(0,8); 
+    currentDragItems = [...dragBank].sort(()=>0.5-Math.random()).slice(0,8); // 8 Random items
     
     currentDragItems.forEach(i => {
         const el = document.createElement('div');
         el.className = 'draggable'; el.draggable = true;
         el.innerHTML = `${i.w} <span class="tts-icon" onclick="event.stopPropagation(); speak('${i.w}')">🔊</span>`;
-        el.dataset.type = i.t; 
+        el.dataset.type = i.t; // regular or irregular
         
         el.addEventListener('dragstart', e => { e.dataTransfer.setData('text', i.t); e.target.classList.add('dragging'); });
         el.addEventListener('dragend', e => e.target.classList.remove('dragging'));
+        el.addEventListener('touchstart', touchStart, {passive: false});
         
         dragPool.appendChild(el);
     });
@@ -832,13 +600,47 @@ window.checkDrag = function() {
     document.getElementById('drag-feedback').textContent = total > 0 ? `Score: ${correct} / ${total}` : "Drag items first!";
 }
 
+// Touch Logic (iPad)
+let tDrag = null;
+function touchStart(e) {
+    if(e.target.classList.contains('tts-icon')) return;
+    tDrag = e.target.closest('.draggable');
+    if(!tDrag) return;
+    // e.preventDefault(); 
+    setTimeout(() => tDrag.classList.add('dragging'), 100);
+    document.addEventListener('touchmove', touchMove, {passive:false});
+    document.addEventListener('touchend', touchEnd);
+}
+function touchMove(e) {
+    if(!tDrag) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    tDrag.style.position = 'fixed'; tDrag.style.zIndex = 1000;
+    tDrag.style.left = (t.clientX - tDrag.offsetWidth/2) + 'px';
+    tDrag.style.top = (t.clientY - tDrag.offsetHeight/2) + 'px';
+}
+function touchEnd(e) {
+    if(!tDrag) return;
+    const t = e.changedTouches[0];
+    tDrag.style.position = ''; tDrag.style.zIndex = ''; tDrag.style.left = ''; tDrag.style.top = '';
+    tDrag.classList.remove('dragging');
+    
+    const elem = document.elementFromPoint(t.clientX, t.clientY);
+    const zone = elem ? elem.closest('.dropzone') : null;
+    if(zone) zone.appendChild(tDrag);
+    
+    document.removeEventListener('touchmove', touchMove);
+    document.removeEventListener('touchend', touchEnd);
+    tDrag = null;
+}
 
-// 4. FLASHCARDS LOGIC (RESTAURADO)
+// 3. FLASHCARDS LOGIC
 let cIdx = 0;
 function loadCard() {
     const d = flashcards[cIdx];
-    // Audio text is the Spanish phrase
-    const tts = `&nbsp;<span class="tts-icon" data-tts="${d.es.replace(/<[^>]*>?/gm, '')}">🔊</span>`;
+    // Clean audio text
+    const audioText = d.es.replace(/<[^>]*>?/gm, '');
+    const tts = `&nbsp;<span class="tts-icon" data-tts="${audioText}">🔊</span>`;
     document.getElementById('fc-front').innerHTML = d.en;
     document.getElementById('fc-back').innerHTML = `${d.es}${tts}<br><br><small style="color:var(--dark-blue)">${d.expl}</small>`;
     document.getElementById('flashcard').classList.remove('is-flipped');
@@ -847,7 +649,7 @@ window.flipCard = () => document.getElementById('flashcard').classList.toggle('i
 window.nextCard = () => { cIdx=(cIdx+1)%flashcards.length; loadCard(); };
 window.prevCard = () => { cIdx=(cIdx-1+flashcards.length)%flashcards.length; loadCard(); };
 
-// Audio Click Handler for Flashcards
+// Audio Click Handler
 document.body.addEventListener('click', function(e) {
     if(e.target.classList.contains('tts-icon')) {
         e.stopPropagation(); // Stop flip
@@ -857,7 +659,7 @@ document.body.addEventListener('click', function(e) {
     }
 });
 
-// UI Functions (Original code preserved)
+// UI Functions
 window.toggleLang = function() {
     currentLang = currentLang === 'en' ? 'es' : 'en';
     document.querySelectorAll('[data-lang-key]').forEach(el => {
@@ -868,22 +670,25 @@ window.toggleLang = function() {
 
 window.toggleTheme = () => document.body.classList.toggle('dark-mode');
 
-// AUDIO ENGINE (Original code preserved)
+// AUDIO ENGINE (PREMIUM VOICE SEEKER)
 function speak(txt) {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(txt);
     u.lang = 'es-ES';
     
+    // Smart Voice Selection Strategy
     const voices = window.speechSynthesis.getVoices();
-    let v = voices.find(voice => voice.name.includes('Google') && voice.lang.includes('es')); 
-    if (!v) v = voices.find(voice => (voice.name.includes('Monica') || voice.name.includes('Paulina')) && voice.lang.includes('es')); 
-    if (!v) v = voices.find(voice => voice.lang.includes('es')); 
+    let v = voices.find(voice => voice.name.includes('Google') && voice.lang.includes('es')); // Chrome
+    if (!v) v = voices.find(voice => (voice.name.includes('Monica') || voice.name.includes('Paulina')) && voice.lang.includes('es')); // Windows/Mac
+    if (!v) v = voices.find(voice => voice.lang.includes('es')); // Fallback
     
     if(v) u.voice = v;
     window.speechSynthesis.speak(u);
 }
 
-window.speechSynthesis.onvoiceschanged = () => {}; 
+// Init
+window.speechSynthesis.onvoiceschanged = () => {}; // Force load voices
+loadCard();
 </script>
 </body>
 </html>
